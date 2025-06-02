@@ -10,7 +10,6 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
         .header { text-align: center; margin-bottom: 30px; }
         .header h1 { color: #4a9eff; font-size: 2.5em; text-shadow: 0 0 10px rgba(74, 158, 255, 0.3); }
-        .admin-btn { position: absolute; top: 20px; right: 20px; background: #4a9eff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
         .trading-area { display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; margin-bottom: 30px; }
         .side { background: rgba(45, 45, 45, 0.8); border-radius: 10px; padding: 20px; border: 2px solid #4a9eff; }
         .side h2 { color: #4a9eff; margin-bottom: 15px; text-align: center; }
@@ -29,25 +28,12 @@
         .lose { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
         .fair { background: rgba(241, 196, 15, 0.2); color: #f1c40f; border: 1px solid #f1c40f; }
         .na { background: rgba(149, 165, 166, 0.2); color: #95a5a6; border: 1px solid #95a5a6; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        .modal-content { background: #2d2d2d; margin: 5% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 800px; max-height: 80vh; overflow-y: auto; }
-        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
-        .close:hover { color: #4a9eff; }
-        .admin-section { margin-bottom: 30px; }
-        .admin-section h3 { color: #4a9eff; margin-bottom: 15px; }
-        .unit-list { display: grid; gap: 10px; }
-        .unit-item { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: center; background: rgba(45, 45, 45, 0.5); padding: 10px; border-radius: 5px; }
-        .login-form { text-align: center; }
-        .login-form input { background: #333; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 10px; margin: 10px; width: 200px; }
-        .btn { background: #4a9eff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
-        .btn:hover { background: #357abd; }
-        .error { color: #e74c3c; margin: 10px 0; }
-        .credits { position: fixed; bottom: 10px; right: 10px; color: rgba(224, 224, 224, 0.6); font-size: 0.9em; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
+        .credits { text-align: center; margin-top: 30px; padding: 20px; color: #888; font-size: 0.9em; }
+        .credits a { color: #4a9eff; text-decoration: none; }
+        .credits a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <button class="admin-btn" onclick="showAdminLogin()">Admin</button>
-    
     <div class="container">
         <div class="header">
             <h1>Superhero Tower Defense Trading Calculator</h1>
@@ -87,54 +73,15 @@
             </div>
             <div id="tradeStatus" class="trade-status fair">Fair Trade</div>
         </div>
-    </div>
-
-    <div class="credits">Created by "ItsFlux"</div>
-
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAdmin()">&times;</span>
-            <div id="loginSection">
-                <h2 style="color: #4a9eff; text-align: center; margin-bottom: 20px;">Admin Login</h2>
-                <div class="login-form">
-                    <input type="password" id="adminPass" placeholder="Admin Password">
-                    <br>
-                    <button class="btn" onclick="adminLogin()">Login</button>
-                    <div id="loginError" class="error"></div>
-                </div>
-            </div>
-            
-            <div id="adminPanel" style="display: none;">
-                <h2 style="color: #4a9eff; margin-bottom: 20px;">Admin Panel</h2>
-                
-                <div class="admin-section">
-                    <h3>Add New Unit</h3>
-                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: center;">
-                        <input type="text" id="newUnitName" placeholder="Unit Name" style="background: #333; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 8px;">
-                        <input type="text" id="newUnitValue" placeholder="Value (or N/A)" style="background: #333; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 8px;">
-                        <select id="newUnitRarity" style="background: #333; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 8px;">
-                            <option value="Secret">Secret</option>
-                            <option value="Exclusive">Exclusive</option>
-                            <option value="Mythic">Mythic</option>
-                            <option value="Legendary">Legendary</option>
-                            <option value="Epic">Epic</option>
-                            <option value="Rare">Rare</option>
-                        </select>
-                        <button class="btn" onclick="addNewUnit()">Add</button>
-                    </div>
-                </div>
-                
-                <div class="admin-section">
-                    <h3>Manage Units</h3>
-                    <div id="unitsList" class="unit-list"></div>
-                </div>
-            </div>
+        
+        <div class="credits">
+            Created by <strong>ItsFlux</strong>
         </div>
     </div>
 
     <script>
         let units = {
-            "The Ruler": { value: "N/A", rarity: "Secret" }, "Shiny The Ruler": { value: "N/A", rarity: "Secret" },
+            "The Ruler": { value: "10000", rarity: "Secret" }, "Shiny The Ruler": { value: "N/A", rarity: "Secret" },
             "Ultimate War Suit": { value: "1400", rarity: "Secret" }, "Shiny Ultimate War Suit": { value: "N/A", rarity: "Secret" },
             "Evil Steel Man": { value: "250", rarity: "Exclusive" }, "Shiny Evil Steel Man": { value: "1800", rarity: "Exclusive" },
             "Super Bemmy": { value: "550", rarity: "Exclusive" }, "Shiny Super Bemmy": { value: "3200", rarity: "Exclusive" },
@@ -204,11 +151,11 @@
                 document.getElementById('difference').textContent = (diff >= 0 ? '+' : '') + diff.toLocaleString();
                 
                 if (diff > 0) {
-                    status.textContent = 'You Win!';
-                    status.className = 'trade-status win';
-                } else if (diff < 0) {
                     status.textContent = 'You Lose!';
                     status.className = 'trade-status lose';
+                } else if (diff < 0) {
+                    status.textContent = 'You Win!';
+                    status.className = 'trade-status win';
                 } else {
                     status.textContent = 'Fair Trade';
                     status.className = 'trade-status fair';
@@ -240,83 +187,6 @@
                 const rarityB = rarities.indexOf(b[1].rarity);
                 if (rarityA !== rarityB) return rarityA - rarityB;
                 return a[0].localeCompare(b[0]);
-            });
-        }
-
-        function showAdminLogin() {
-            document.getElementById('adminModal').style.display = 'block';
-            document.getElementById('loginSection').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        function closeAdmin() {
-            document.getElementById('adminModal').style.display = 'none';
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('adminPass').value = '';
-        }
-
-        function adminLogin() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === 'Td9#kL2$xN8@vR5!') {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadUnitsManager();
-            } else {
-                document.getElementById('loginError').textContent = 'Invalid password';
-            }
-        }
-
-        function loadUnitsManager() {
-            const container = document.getElementById('unitsList');
-            container.innerHTML = '';
-            const sortedUnits = getSortedUnits();
-            sortedUnits.forEach(([name, data]) => {
-                const div = document.createElement('div');
-                div.className = 'unit-item';
-                div.innerHTML = `
-                    <span>[${data.rarity}] ${name}</span>
-                    <input type="text" value="${data.value}" onchange="updateUnit('${name}', this.value, '${data.rarity}')" style="background: #333; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 5px;">
-                    <select onchange="updateUnit('${name}', '${data.value}', this.value)" style="background: #333; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 5px;">
-                        ${rarities.map(rarity => `<option value="${rarity}" ${rarity === data.rarity ? 'selected' : ''}>${rarity}</option>`).join('')}
-                    </select>
-                    <button class="btn" onclick="deleteUnit('${name}')">Delete</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function updateUnit(name, newValue, newRarity) {
-            units[name] = { value: newValue, rarity: newRarity };
-            updateSelects();
-            calculateTrade();
-        }
-
-        function deleteUnit(name) {
-            delete units[name];
-            updateSelects();
-            loadUnitsManager();
-            calculateTrade();
-        }
-
-        function addNewUnit() {
-            const name = document.getElementById('newUnitName').value.trim();
-            const value = document.getElementById('newUnitValue').value.trim();
-            const rarity = document.getElementById('newUnitRarity').value;
-            if (name && value) {
-                units[name] = { value: value, rarity: rarity };
-                document.getElementById('newUnitName').value = '';
-                document.getElementById('newUnitValue').value = '';
-                updateSelects();
-                loadUnitsManager();
-            }
-        }
-
-        function updateSelects() {
-            const sortedUnits = getSortedUnits();
-            document.querySelectorAll('.unit-input select:first-child').forEach(select => {
-                const currentValue = select.value;
-                select.innerHTML = `<option value="">Select Unit...</option>` + 
-                    sortedUnits.map(([unit, data]) => `<option value="${unit}" ${unit === currentValue ? 'selected' : ''}>[${data.rarity}] ${unit}</option>`).join('');
             });
         }
 
